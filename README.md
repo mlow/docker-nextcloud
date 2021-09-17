@@ -29,10 +29,6 @@ source .env
 # Create requisite dirs
 mkdir -p "${DATA_ROOT}"/{acme-challenge,acme.sh,ssl,postgres,nextcloud}
 
-# Register account for certs
-docker run -it --rm -v "${DATA_ROOT}/acme.sh:/acme.sh" neilpang/acme.sh \
-	acme.sh --register-account -m "${ACME_EMAIL}"
-
 # Pre-create final cert/key files with appropriate permissions
 for DOMAIN in ${DOMAINS}; do
   mkdir "${DATA_ROOT}/ssl/${DOMAIN}"
@@ -43,6 +39,14 @@ done
 
 # Prepare nginx config
 sed -i -e "s/example.com/${DOMAINS}/g" nginx/sites-enabled/nextcloud.conf
+
+# Optional: Switch default CA from ZeroSSL to LetsEncrypt
+docker run --rm -v "${DATA_ROOT}/acme.sh:/acme.sh" neilpang/acme.sh \
+	acme.sh --set-default-ca --server letsencrypt
+
+# Register account with CA
+docker run --rm -v "${DATA_ROOT}/acme.sh:/acme.sh" neilpang/acme.sh \
+	acme.sh --register-account -m "${ACME_EMAIL}"
 ```
 
 ### Start!
