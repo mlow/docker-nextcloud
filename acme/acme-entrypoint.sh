@@ -1,11 +1,10 @@
 #!/bin/sh
 
-set -e
 for DOMAIN in $DOMAINS; do
-  if [ ! -d "/acme.sh/${DOMAIN}" ]; then
+  if [ ! -f "/acme.sh/${DOMAIN}/${DOMAIN}.cer" ]; then
     /usr/local/bin/--issue \
-	-d "${DOMAIN}" \
-	-w "/acme-challenge/${DOMAIN}" \
+      -d "${DOMAIN}" \
+      -w "/acme-challenge/${DOMAIN}" \
       || { echo "Could not issue certificate for ${DOMAIN}"; exit 1; }
   fi
 
