@@ -44,11 +44,13 @@ services:
 
   proxy:
     restart: always
-    build:
-      context: ./nginx
+    image: nginx:mainline-alpine
     volumes:
+      - ./nginx.conf:/etc/nginx/templates/default.conf.template
       - ${DATA_ROOT}/ssl:/etc/nginx/ssl
       - ${DATA_ROOT}/acme-challenge:/acme-challenge
+    environment:
+      DOMAINS: ${DOMAINS}
     depends_on: [nextcloud, acme]
     ports:
       - "80:80"

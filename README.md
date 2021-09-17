@@ -37,9 +37,6 @@ for DOMAIN in ${DOMAINS}; do
   chown -R 101:101 "${DATA_ROOT}/ssl"
 done
 
-# Prepare nginx config
-sed -i -e "s/example.com/${DOMAINS}/g" nginx/sites-enabled/nextcloud.conf
-
 # Optional: Switch default CA from ZeroSSL to LetsEncrypt
 docker run --rm -v "${DATA_ROOT}/acme.sh:/acme.sh" neilpang/acme.sh \
 	acme.sh --set-default-ca --server letsencrypt
