@@ -33,6 +33,14 @@ mkdir -p "${DATA_ROOT}"/{acme-challenge,acme.sh,ssl,postgres,nextcloud}
 docker run -it --rm -v "${DATA_ROOT}/acme.sh:/acme.sh" neilpang/acme.sh \
 	acme.sh --register-account -m "${ACME_EMAIL}"
 
+# Pre-create final cert/key files with appropriate permissions
+for DOMAIN in ${DOMAINS}; do
+  mkdir "${DATA_ROOT}/ssl/${DOMAIN}"
+  touch "${DATA_ROOT}/ssl/${DOMAIN}"/{fullchain.pem,cert.pem,key.pem}
+  chmod 0600 "${DATA_ROOT}/ssl/${DOMAIN}/key.pem"
+  chown -R 101:101 "${DATA_ROOT}/ssl"
+done
+
 # Prepare nginx config
 sed -i -e "s/example.com/${DOMAINS}/g" nginx/sites-enabled/nextcloud.conf
 ```
