@@ -17,7 +17,7 @@ services:
 
   nextcloud:
     restart: always
-    image: nextcloud:21-apache 
+    image: nextcloud:21-apache
     volumes:
       - ${DATA_ROOT}/nextcloud/html:/var/www/html
       - ${DATA_ROOT}/nextcloud/data:/var/www/html/data
@@ -51,5 +51,5 @@ services:
       - ${DATA_ROOT}/acme-challenge:/acme-challenge
     depends_on: [nextcloud, acme]
     ports:
-      - "8080:80"
-      - "8443:443"
+      - "80:80"
+      - "443:443"
