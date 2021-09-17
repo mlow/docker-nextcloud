@@ -3,7 +3,7 @@ version: "3.8"
 services:
   postgres:
     restart: always
-    image: postgres:12-alpine
+    image: postgres:13-alpine
     environment:
       POSTGRES_DB: ${DB_NAME}
       POSTGRES_USER: ${DB_USER}
@@ -17,7 +17,7 @@ services:
 
   nextcloud:
     restart: always
-    image: nextcloud:21-apache
+    image: nextcloud:${NEXTCLOUD_VERSION}-apache
     volumes:
       - ${DATA_ROOT}/nextcloud/html:/var/www/html
       - ${DATA_ROOT}/nextcloud/data:/var/www/html/data
