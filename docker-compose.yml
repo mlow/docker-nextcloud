@@ -41,6 +41,8 @@ services:
       - ${DATA_ROOT}/ssl:/ssl
       - ${DATA_ROOT}/acme-challenge:/acme-challenge
     environment:
+      INSTALL_UID: 101
+      INSTALL_GID: 101
       DOMAINS: ${DOMAINS}
 
   proxy:

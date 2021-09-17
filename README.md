@@ -29,14 +29,6 @@ source .env
 # Create requisite dirs
 mkdir -p "${DATA_ROOT}"/{acme-challenge,acme.sh,ssl,postgres,nextcloud}
 
-# Pre-create final cert/key files with appropriate permissions
-for DOMAIN in ${DOMAINS}; do
-  mkdir "${DATA_ROOT}/ssl/${DOMAIN}"
-  touch "${DATA_ROOT}/ssl/${DOMAIN}"/{fullchain.pem,cert.pem,key.pem}
-  chmod 0600 "${DATA_ROOT}/ssl/${DOMAIN}/key.pem"
-  chown -R 101:101 "${DATA_ROOT}/ssl"
-done
-
 # Optional: Switch default CA from ZeroSSL to LetsEncrypt
 docker run --rm -v "${DATA_ROOT}/acme.sh:/acme.sh" neilpang/acme.sh \
 	acme.sh --set-default-ca --server letsencrypt
