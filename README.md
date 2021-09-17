@@ -14,7 +14,7 @@ git clone https://github.com/mlow/docker-nextcloud
 cd docker-nextcloud
 ```
 
-### Copy .env.example to .env
+### Set up .env
 ```shell
 cp .env.example .env
 
