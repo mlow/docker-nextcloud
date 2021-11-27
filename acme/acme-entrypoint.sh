@@ -5,7 +5,7 @@ for DOMAIN in $DOMAINS; do
     /usr/local/bin/--issue \
       -d "${DOMAIN}" \
       -w "/acme-challenge/${DOMAIN}" \
-      || { echo "Could not issue certificate for ${DOMAIN}"; exit 1; }
+        || { echo "Could not issue certificate for ${DOMAIN}"; exit 1; }
   fi
 
   # prepopulate key/cert at install destination w/ appropriate permissions
@@ -19,7 +19,7 @@ for DOMAIN in $DOMAINS; do
     --cert-file "/ssl/${DOMAIN}/cert.pem" \
     --key-file "/ssl/${DOMAIN}/key.pem" \
     --fullchain-file "/ssl/${DOMAIN}/fullchain.pem" \
-    || { echo "Could not deploy certificate for ${DOMAIN}"; exit 1; }
+      || { echo "Could not install certificate for ${DOMAIN}"; exit 1; }
 done
 
 exec /entry.sh daemon
